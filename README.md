@@ -1,10 +1,10 @@
 >If you think good architecture is expensive, try bad architecture.
 
-> *Brian Foote and Joseph Yoder*
+*- Brian Foote and Joseph Yoder*
 ---
 > … with proper design, the features come cheaply. This approach is arduous, but continues to succeed.
 
-> *Dennis Ritchie*
+*- Dennis Ritchie*
 ---
 ## Micosoft ebook on clean architecture of Monolithic applications
 https://aka.ms/webappebook
@@ -36,10 +36,6 @@ Factor | Traditional Web App | Single Page Application
 > *Jeff Atwood*
 
 ## Common Design Principles
-> If builders built buildings the way programmers wrote programs, then the first woodpecker that came along would destroy civilization.
-
-> *Gerald Weinberg*
----
 ### Separation of Concerns (SOC)
 ``` Separation of concerns is a key consideration behind the use of layers in application architectures. ```
 - Apps can follow SOC by separating core business behavior from infrastructure and user interface logic.
@@ -79,7 +75,11 @@ Factor | Traditional Web App | Single Page Application
 ### Bounded Contexts
 - Bounded contexts are a central pattern in Domain-Driven Design
 - Use different db contexts for the respective conceptual module of a large application. The modules can share data in the application layer rather than a shared db
+---
+> If builders built buildings the way programmers wrote programs, then the first woodpecker that came along would destroy civilization.
 
+*- Gerald Weinberg*
+---
 ## Layers in an application
 Logical layering is a common technique for improving the organization of code in enterprise software applications
 
@@ -112,7 +112,7 @@ Since the UI layer doesn’t have any direct dependency on types of Infrastructu
 - EF Core types (DbContext, Migrations)
 - Data access implementation types (Repositories)
 - Infrastructure-specific services (FileLogger, SmtpNotifier, etc.)
-
+#### Notes
 - Types in Infrastructure layer should implement interfaces defined in the Application Core
 - Infrastructure Layer should have a reference to the Application Core project.
 
@@ -124,9 +124,8 @@ Since the UI layer doesn’t have any direct dependency on types of Infrastructu
 - Views
 - ViewModels
 - Startup
-
+#### Notes
 - UI layer in an entry point for ASP.NET Core MVC-based application
 - UI layer is an ASP.NET Core MVC (or Razor Pages) project
 - This project should reference the Application Core project, and its types should interact with infrastructure strictly through interfaces defined in Application Core
 - No direct instantiation of (or static calls to) Infrastructure layer types should be permitted in the UI layer
-
