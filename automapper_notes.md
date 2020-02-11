@@ -1,4 +1,4 @@
-## Automapper
+# Automapper
 Automapper maps properties of 2 classes. Typically this can be used to map Entity and DTO.
 
 ## Approach 1
@@ -42,11 +42,9 @@ public class UserController : Controller {
     }
 }
 ```
-Steps - 
-https://stackoverflow.com/questions/40275195/how-to-set-up-automapper-in-asp-net-core
-
-Nice article - 
-https://code-maze.com/automapper-net-core/
+### Links
+- https://stackoverflow.com/questions/40275195/how-to-set-up-automapper-in-asp-net-core
+- https://code-maze.com/automapper-net-core/
 
 wiring automapper in northwindtraders repo
 
