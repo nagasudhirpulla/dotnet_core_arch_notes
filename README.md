@@ -96,3 +96,16 @@ Logical layering is a common technique for improving the organization of code in
 
 ![Clean Architecture Projects in Solution](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/raw/master/assets/clean_architecture_projects_in_solution.png)
 
+Because the Application Core doesn’t depend on Infrastructure, it’s very easy to write automated unit tests for this layer
+
+Since the UI layer doesn’t have any direct dependency on types of Infrastructure project, it’s easy to swap out implementations, either to facilitate testing or for changing application requirements
+
+### Application Core Layer Types
+- Entities (business model classes that are persisted) and Aggregates
+- Interfaces
+- Services
+- DTOs (Data Transfer Objects)
+- Specifications
+- Exceptions
+
+
