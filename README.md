@@ -52,3 +52,6 @@ Factor | Traditional Web App | Single Page Application
 
 ### Dependency Inversion
 ``` The direction of dependency within the application should be in the direction of abstraction, not implementation details. ```
+![Dependency inversion Figure](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/raw/master/inverted_dependency_graph.png)
+- Dependency inversion is a key part of building loosely-coupled applications
+- The resulting applications are more testable, modular, and maintainable as a result. The practice of dependency injection is made possible by following the dependency inversion principle
