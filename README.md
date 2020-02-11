@@ -20,7 +20,7 @@ Use a SPA when:
 - Dev team is familiar with JavaScript and/or TypeScript development
 - Application must already expose an API for other (internal or public) clients
 
-A hybrid approach is also possible, the simplest being more rich SPA-like sub-applications within a larger traditional web application.
+A hybrid approach is also possible, where more rich SPA-like sub-applications within a larger traditional web application.
 
 SPAs can be written in C# and run on browser using WebAssembly (Razor Components). But this is still in beginning phase.
 
