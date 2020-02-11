@@ -9,6 +9,9 @@
 ## Micosoft ebook on clean architecture of Monolithic applications
 https://aka.ms/webappebook
 
+## Jason Taylor NorthwindTraders Clean architecture example
+https://github.com/jasontaylordev/NorthwindTraders
+
 ## Choosing between traditional and SPA applications
 Use traditional web apps when:
 - Application’s client-side requirements are simple or even read-only
