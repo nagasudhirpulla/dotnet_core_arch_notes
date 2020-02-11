@@ -10,5 +10,7 @@ https://github.com/jasontaylordev/NorthwindTraders/blob/28e05758d93cb838c68b91d7
 ```cs
 services.AddAutoMapper(Assembly.GetExecutingAssembly());
 ```
+and https://github.com/jasontaylordev/NorthwindTraders/tree/master/Src/Application/Common/Mappings
+
 Mapping is done in individual DTO class definition as shown below - 
 https://github.com/jasontaylordev/NorthwindTraders/blob/28e05758d93cb838c68b91d73d8c3f28ceafe42f/Src/Application/Products/Queries/GetProductsFile/ProductRecordDto.cs#L17
