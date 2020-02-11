@@ -108,4 +108,25 @@ Since the UI layer doesn’t have any direct dependency on types of Infrastructu
 - Specifications
 - Exceptions
 
+### Infrastructure Layer Types
+- EF Core types (DbContext, Migrations)
+- Data access implementation types (Repositories)
+- Infrastructure-specific services (FileLogger, SmtpNotifier, etc.)
+
+- Types in Infrastructure layer should implement interfaces defined in the Application Core
+- Infrastructure Layer should have a reference to the Application Core project.
+
+### UI Layer Types
+- Controllers
+- Filters
+- Pages
+- Services
+- Views
+- ViewModels
+- Startup
+
+- UI layer in an entry point for ASP.NET Core MVC-based application
+- UI layer is an ASP.NET Core MVC (or Razor Pages) project
+- This project should reference the Application Core project, and its types should interact with infrastructure strictly through interfaces defined in Application Core
+- No direct instantiation of (or static calls to) Infrastructure layer types should be permitted in the UI layer
 
