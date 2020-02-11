@@ -71,6 +71,11 @@ Factor | Traditional Web App | Single Page Application
 ### Persistence Ignorance (PI)
 ``` App code is unaffected by the choice of persistence technology ```
 
+### Domain Driven Design (DDD)
+``` DDD is a way of looking at software from top-down```
+- Our focus should'nt be on technology, but the business or activity we want to achieve through the software
+- An approach can be to create models of our domain and make the software confirm to that
+
 ### Bounded Contexts
 - Bounded contexts are a central pattern in Domain-Driven Design
 - Use different db contexts for the respective conceptual module of a large application. The modules can share data in the application layer rather than a shared db
