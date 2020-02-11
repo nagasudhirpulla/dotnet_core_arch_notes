@@ -55,3 +55,29 @@ Factor | Traditional Web App | Single Page Application
 ![Dependency inversion Figure](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/raw/master/inverted_dependency_graph.png)
 - Dependency inversion is a key part of building loosely-coupled applications
 - The resulting applications are more testable, modular, and maintainable as a result. The practice of dependency injection is made possible by following the dependency inversion principle
+
+### Explicit Dependencies
+``` Methods and classes should explicitly require any collaborating objects they need in order to function correctly ```
+- One example is that the class constructor should specify the client whatever dependencied that are to be injected (possibly nothing if the class is just using a default constructor)
+- By following the explicit dependencies principle, our classes and methods are being honest with their clients about what they need in order to function
+
+### Single Responsibility
+```Objects should have only one responsibility and that they should have only one reason to change ```
+- For example, Presentation responsibility should remain in the UI project, while data access responsibility should be kept within an infrastructure project. Business logic should be kept in the application core project, where it can be easily tested and can evolve independently from other responsibilities.
+
+### Don't Repeat Yourself (DRY)
+``` The application should avoid specifying behavior related to a particular concept in multiple places as this is a frequent source of errors ```
+
+### Persistence Ignorance (PI)
+``` App code is unaffected by the choice of persistence technology ```
+
+### Bounded Contexts
+- Bounded contexts are a central pattern in Domain-Driven Design
+- Use different db contexts for the respective conceptual module of a large application. The modules can share data in the application layer rather than a shared db
+
+## Layers in an application
+Logical layering is a common technique for improving the organization of code in enterprise software applications
+
+## Scaling Up and Scaling down
+- **Scaling up** means adding additional CPU, memory, disk space, or other resources to the server hosting the app. 
+- **Scaling out** means adding additional instances of app servers, like physical servers, VMs, or containers. When the app is hosted across multiple instances, a load balancer is used to assign requests to individual app instances.
