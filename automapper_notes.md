@@ -20,6 +20,9 @@ public class MappingProfile : Profile {
         // Add as many of these lines as you need to map your objects
         CreateMap<User, UserDto>();
         CreateMap<UserDto, User>();
+        CreateMap<Product, ProductRecordDto>()
+            .ForMember(d => d.Name, opt => opt.MapFrom(s => s.ProductName))
+            .ForMember(d => d.Category, opt => opt.MapFrom(s => s.Category != null ? s.Category.CategoryName : string.Empty));
     }
 }
 ```
