@@ -46,11 +46,51 @@ public class UserController : Controller {
 - https://stackoverflow.com/questions/40275195/how-to-set-up-automapper-in-asp-net-core
 - https://code-maze.com/automapper-net-core/
 
-wiring automapper in northwindtraders repo
+## Approach 2
+This approach is taken from NorthwindTraders Repository
 
-https://github.com/jasontaylordev/NorthwindTraders/blob/28e05758d93cb838c68b91d73d8c3f28ceafe42f/Src/Application/DependencyInjection.cs#L13
+- Add Automapper to services DI container
+[Dependency Injection](https://github.com/jasontaylordev/NorthwindTraders/blob/28e05758d93cb838c68b91d73d8c3f28ceafe42f/Src/Application/DependencyInjection.cs#L13)
 ```cs
+// ...
 services.AddAutoMapper(Assembly.GetExecutingAssembly());
+// ...
+```
+
+- Create Interface IMapFrom
+Mappings can be defined in classes that implement IMapFrom interface
+```cs
+public interface IMapFrom<T>
+{   
+    void Mapping(Profile profile) => profile.CreateMap(typeof(T), GetType());
+}
+```
+
+- Create class MappingProfile that extends Profile
+This class will wire all the mappings of the classes that 
+```cs
+public class MappingProfile : Profile
+{
+    public MappingProfile()
+    {
+        ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+
+    private void ApplyMappingsFromAssembly(Assembly assembly)
+    {
+        var types = assembly.GetExportedTypes()
+            .Where(t => t.GetInterfaces().Any(i => 
+                i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
+            .ToList();
+
+        foreach (var type in types)
+        {
+            var instance = Activator.CreateInstance(type);
+            var methodInfo = type.GetMethod("Mapping");
+            methodInfo?.Invoke(instance, new object[] { this });
+        }
+    }
+}
 ```
 and https://github.com/jasontaylordev/NorthwindTraders/tree/master/Src/Application/Common/Mappings
 
