@@ -1,3 +1,47 @@
+## Automapper
+Automapper maps properties of 2 classes. Typically this can be used to map Entity and DTO.
+
+## Approach 1
+- Add Automapper in ConfigureServices method
+```cs
+public void ConfigureServices(IServiceCollection services)
+{
+    // ...
+    services.AddAutoMapper(typeof(Startup));
+    // ...
+}
+```
+
+- Create Class that extends **Profile**
+```cs
+public class MappingProfile : Profile {
+    public MappingProfile() {
+        // Add as many of these lines as you need to map your objects
+        CreateMap<User, UserDto>();
+        CreateMap<UserDto, User>();
+    }
+}
+```
+
+- Inject automapper in controller constructor and use in methods
+```cs
+public class UserController : Controller {
+
+    // Create a field to store the mapper object
+    private readonly IMapper _mapper;
+
+    // Assign the object in the constructor for dependency injection
+    public UserController(IMapper mapper) {
+        _mapper = mapper;
+    }
+
+    public async Task<IActionResult> Edit(string id) {
+        // ...
+        var uDTO = _mapper.Map<UserDto>(user);
+        // .... 
+    }
+}
+```
 Steps - 
 https://stackoverflow.com/questions/40275195/how-to-set-up-automapper-in-asp-net-core
 
