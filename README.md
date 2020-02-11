@@ -52,7 +52,7 @@ Factor | Traditional Web App | Single Page Application
 
 ### Dependency Inversion
 ``` The direction of dependency within the application should be in the direction of abstraction, not implementation details. ```
-![Dependency inversion Figure](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/raw/master/inverted_dependency_graph.png)
+![Dependency inversion Figure](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/raw/master/assets/inverted_dependency_graph.png)
 - Dependency inversion is a key part of building loosely-coupled applications
 - The resulting applications are more testable, modular, and maintainable as a result. The practice of dependency injection is made possible by following the dependency inversion principle
 
@@ -86,3 +86,13 @@ Logical layering is a common technique for improving the organization of code in
 ## Scaling Up and Scaling down
 - **Scaling up** means adding additional CPU, memory, disk space, or other resources to the server hosting the app. 
 - **Scaling out** means adding additional instances of app servers, like physical servers, VMs, or containers. When the app is hosted across multiple instances, a load balancer is used to assign requests to individual app instances.
+
+## Clean Architecture
+- Clean architecture puts the business logic and application model at the center of the application
+- Instead of having business logic depend on data access or other infrastructure concerns, this dependency is inverted: infrastructure and implementation details depend on the Application Core
+- This is achieved by defining abstractions, or interfaces, in the Application Core, which are then implemented by in the Infrastructure layer.
+
+![Clean Architecture Project Layers](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/raw/master/assets/clean_architecture_project_layers.png)
+
+![Clean Architecture Projects in Solution](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/raw/master/assets/clean_architecture_projects_in_solution.png)
+
