@@ -2,7 +2,7 @@
 Automapper maps properties of 2 classes. Typically this can be used to map Entity and DTO.
 
 ## Approach 1
-- Add Automapper in ConfigureServices method
+- Add Automapper in **ConfigureServices** method
 ```cs
 public void ConfigureServices(IServiceCollection services)
 {
@@ -13,6 +13,7 @@ public void ConfigureServices(IServiceCollection services)
 ```
 
 - Create Class that extends **Profile**
+Conventions can be overwritten by using the **.ForMember** method
 ```cs
 public class MappingProfile : Profile {
     public MappingProfile() {
@@ -47,7 +48,7 @@ public class UserController : Controller {
 - https://code-maze.com/automapper-net-core/
 
 ## Approach 2
-This approach is taken from NorthwindTraders Repository
+This approach is taken from **NorthwindTraders** Repository
 
 - Add Automapper to services DI container
 [Dependency Injection](https://github.com/jasontaylordev/NorthwindTraders/blob/28e05758d93cb838c68b91d73d8c3f28ceafe42f/Src/Application/DependencyInjection.cs#L13)
@@ -57,8 +58,8 @@ services.AddAutoMapper(Assembly.GetExecutingAssembly());
 // ...
 ```
 
-- Create Interface IMapFrom
-Mappings can be defined in classes that implement IMapFrom interface
+- Create Interface **IMapFrom**
+Mappings can be defined in classes that implement IMapFrom interface. [Link](https://github.com/jasontaylordev/NorthwindTraders/blob/master/Src/Application/Common/Mappings/IMapFrom.cs)
 ```cs
 public interface IMapFrom<T>
 {   
@@ -66,8 +67,8 @@ public interface IMapFrom<T>
 }
 ```
 
-- Create class MappingProfile that extends Profile
-This class will wire all the mappings of the classes that 
+- Create class **MappingProfile** that extends Profile
+This Profile class will wire up the mappings of the classes that implement the IMapFrom interface. [Link](https://github.com/jasontaylordev/NorthwindTraders/blob/master/Src/Application/Common/Mappings/MappingProfile.cs)
 ```cs
 public class MappingProfile : Profile
 {
@@ -92,7 +93,20 @@ public class MappingProfile : Profile
     }
 }
 ```
-and https://github.com/jasontaylordev/NorthwindTraders/tree/master/Src/Application/Common/Mappings
 
-Mapping is done in individual DTO class definition as shown below - 
-https://github.com/jasontaylordev/NorthwindTraders/blob/28e05758d93cb838c68b91d73d8c3f28ceafe42f/Src/Application/Products/Queries/GetProductsFile/ProductRecordDto.cs#L17
+- Define mapping in a class
+Example of creating a mapping in a DTO class is as shown below. Mapping conventions can also be changed using ForMember method as shown below. [Link](https://github.com/jasontaylordev/NorthwindTraders/blob/28e05758d93cb838c68b91d73d8c3f28ceafe42f/Src/Application/Products/Queries/GetProductsFile/ProductRecordDto.cs#L17)
+```cs
+public class ProductRecordDto : IMapFrom<Product>
+{
+    public string Category { get; set; }
+    public string Name { get; set; }
+
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<Product, ProductRecordDto>()
+            .ForMember(d => d.Name, opt => opt.MapFrom(s => s.ProductName))
+            .ForMember(d => d.Category, opt => opt.MapFrom(s => s.Category != null ? s.Category.CategoryName : string.Empty));
+    }
+}
+```
