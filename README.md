@@ -1,10 +1,10 @@
 >If you think good architecture is expensive, try bad architecture.
-
-*- Brian Foote and Joseph Yoder*
+>
+> *- Brian Foote and Joseph Yoder*
 ---
 > … with proper design, the features come cheaply. This approach is arduous, but continues to succeed.
-
-*- Dennis Ritchie*
+> 
+> *- Dennis Ritchie*
 ---
 ## Micosoft ebook on clean architecture of Monolithic applications
 https://aka.ms/webappebook
@@ -30,11 +30,11 @@ Factor | Traditional Web App | Single Page Application
 *Support Browsers without Scripting* | Supported | Not Supported
 *Minimal Client-Side Application Behavior* | Well-Suited | Overkill
 *Rich, Complex User Interface Requirements* | Limited | Well-Suited
-
+---
 > Atwood’s Law: Any application that can be written in JavaScript, will eventually be written in JavaScript.
-
+> 
 > *Jeff Atwood*
-
+---
 ## Common Design Principles
 ### Separation of Concerns (SOC)
 ``` Separation of concerns is a key consideration behind the use of layers in application architectures. ```
@@ -77,8 +77,8 @@ Factor | Traditional Web App | Single Page Application
 - Use different db contexts for the respective conceptual module of a large application. The modules can share data in the application layer rather than a shared db
 ---
 > If builders built buildings the way programmers wrote programs, then the first woodpecker that came along would destroy civilization.
-
-*- Gerald Weinberg*
+> 
+> *- Gerald Weinberg*
 ---
 ## Layers in an application
 Logical layering is a common technique for improving the organization of code in enterprise software applications
