@@ -33,7 +33,7 @@ Factor | Traditional Web App | Single Page Application
 ---
 > Atwood’s Law: Any application that can be written in JavaScript, will eventually be written in JavaScript.
 > 
-> *Jeff Atwood*
+> *- Jeff Atwood*
 ---
 ## Common Design Principles
 ### Separation of Concerns (SOC)
