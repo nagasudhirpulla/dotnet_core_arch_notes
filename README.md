@@ -132,3 +132,8 @@ Since the UI layer doesn’t have any direct dependency on types of Infrastructu
 - UI layer is an ASP.NET Core MVC (or Razor Pages) project
 - This project should reference the Application Core project, and its types should interact with infrastructure strictly through interfaces defined in Application Core
 - No direct instantiation of (or static calls to) Infrastructure layer types should be permitted in the UI layer
+
+## Libraries to efficiently implement Clean Architecture
+The following are the links to notes on some libraries that help us better implement Clean Architecture
+- [Automapper](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/blob/master/automapper_notes.md)
+- [Mediatr](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/blob/master/mediatr_notes.md)
