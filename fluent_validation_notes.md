@@ -8,7 +8,8 @@
 - Make Model Validation clean by maintaining validations in a separate file and avoid ModelState.IsValid in controller actions.
 - Also we can move model validations from UI layer to Application core, i.e., we can support model validation in other platforms like console apps etc.
 
-
+## Using like ModelState.IsValid
+We can replace ModelState.IsValid with fluent validation if we want to strictly replace ModelState.IsValid - https://youtu.be/fAJrVf8f6M4?t=3185
 
 ## Links
 - [Fluent Validation Pipeline Behaviour in NorthWindTraders](https://github.com/jasontaylordev/NorthwindTraders/blob/master/Src/Application/Common/Behaviours/RequestValidationBehavior.cs)
