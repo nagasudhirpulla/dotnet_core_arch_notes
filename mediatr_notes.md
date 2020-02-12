@@ -2,7 +2,8 @@
 
 ## Purpose
 MediatR allows us to decouple our controllers from our business logic by having our controller actions send a request message to a handler.
-Mediatr library implements the **Mediator** design pattern.
+Mediatr library implements the **Mediator** design pattern. 
+Downside of using Mediatr is that, it violates the Explicit Dependency Principle.
 
 ## Inspiration
 - Using mediatr library, we can implement CQRS (command query responsibility segregation) elegantly and make controller code very thin.
@@ -134,12 +135,115 @@ public class AccountsController : Controller
 }  
 ```
 
-## Request Pre-processing and Post-processing
-Mediatr can also do request pre-processing and post-processing, through which can do a lot things like handling, statistics etc.
+## Request Pre-processing, Post-processing and Pipeline behaviours
+Mediatr can also do request pre-processing, post-processing and pipeline beaviours, through which can do a lot things like handling, statistics etc.
 
+- Add all Pre, Post and Pipeline behaviours to the service DI container
+```cs
+public static class DependencyInjection
+{
+    public static IServiceCollection AddApplication(this IServiceCollection services)
+    {
+        // ... other code
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+        return services;
+    }
+}
+```
 
+- Define Request Pre-processors if any
+```cs
+public class RequestLogger<TRequest> : IRequestPreProcessor<TRequest>
+{
+    // injecting dependencies into the Pre-Processor via constructor
+    private readonly ILogger _logger;
+    private readonly ICurrentUserService _currentUserService;
+
+    public RequestLogger(ILogger<TRequest> logger, ICurrentUserService currentUserService)
+    {
+        _logger = logger;
+        _currentUserService = currentUserService;
+    }
+
+    //
+    // pre-processing logic
+    //
+    public Task Process(TRequest request, CancellationToken cancellationToken)
+    {
+        var name = typeof(TRequest).Name;
+
+        _logger.LogInformation("Northwind Request: {Name} {@UserId} {@Request}", 
+            name, _currentUserService.UserId, request);
+
+        return Task.CompletedTask;
+    }
+}
+```
+
+- Define Request Post-Processors if any
+```cs
+public class GenericRequestPostProcessor<TRequest, TResponse> : IRequestPostProcessor<TRequest, TResponse>
+{
+    private readonly TextWriter _writer;
+
+    public GenericRequestPostProcessor(TextWriter writer)
+    {
+        _writer = writer;
+    }
+
+    public Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
+    {
+        return _writer.WriteLineAsync("- All Done");
+    }
+}
+```
+
+- Define Request Pipeline Behaviours if any
+```cs
+public class RequestPerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+{
+    // injecting dependencies to the handler via constructor
+    private readonly Stopwatch _timer;
+    private readonly ILogger<TRequest> _logger;
+    private readonly ICurrentUserService _currentUserService;
+
+    public RequestPerformanceBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUserService)
+    {
+        _timer = new Stopwatch();
+
+        _logger = logger;
+        _currentUserService = currentUserService;
+    }
+
+    // pipeline behaviour code
+    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    {
+        _timer.Start();
+
+        var response = await next();
+
+        _timer.Stop();
+
+        if (_timer.ElapsedMilliseconds > 500)
+        {
+            var name = typeof(TRequest).Name;
+
+            _logger.LogWarning("Northwind Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@Request}", 
+                name, _timer.ElapsedMilliseconds, _currentUserService.UserId, request);
+        }
+
+        return response;
+    }
+}
+```
 ## Links
 - https://www.c-sharpcorner.com/article/command-mediator-pattern-in-asp-net-core-using-mediatr2/
 - [Request Handler Code in NorthWindTraders](https://github.com/jasontaylordev/NorthwindTraders/blob/master/Src/Application/Products/Commands/CreateProduct/CreateProductCommandHandler.cs)
 - [Mediatr Send example in NorthWindTraders](https://github.com/jasontaylordev/NorthwindTraders/blob/master/Src/WebUI/Controllers/ProductsController.cs)
-
+- [Official Mediatr Pipeline wireup to DI container example](https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples.AspNetCore/Program.cs)
+- [Official Request Pipeline Behaviour class example](https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples/GenericPipelineBehavior.cs)
+- [Official Request Pre-processor implementation example](https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples/GenericRequestPreProcessor.cs)
+- [Official Request Post-processor implementation example](https://github.com/jbogard/MediatR/blob/master/samples/MediatR.Examples/GenericRequestPostProcessor.cs)
+- [Pipeline, Pre-Processor behaviour classes in  NorthWindTraders](https://github.com/jasontaylordev/NorthwindTraders/tree/master/Src/Application/Common/Behaviours)
+- [Wiring Up Pipeline behaviours in NorthWindTraders](https://github.com/jasontaylordev/NorthwindTraders/blob/28e05758d93cb838c68b91d73d8c3f28ceafe42f/Src/Application/DependencyInjection.cs#L15)
