@@ -133,6 +133,11 @@ public class AccountsController : Controller
     }  
 }  
 ```
+
+## Request Pre-processing and Post-processing
+Mediatr can also do request pre-processing and post-processing, through which can do a lot things like handling, statistics etc.
+
+
 ## Links
 - https://www.c-sharpcorner.com/article/command-mediator-pattern-in-asp-net-core-using-mediatr2/
 - [Request Handler Code in NorthWindTraders](https://github.com/jasontaylordev/NorthwindTraders/blob/master/Src/Application/Products/Commands/CreateProduct/CreateProductCommandHandler.cs)
