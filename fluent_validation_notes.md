@@ -5,7 +5,8 @@
 - We can also remove the ModelState.IsValid in all controller methods and instead handle that in a Pipeline behaviour for all requests in common thereby obeying the DRY principle
 
 ## Motivation
-Make Model Validation clean by maintaining validations in a separate file and avoid ModelState.IsValid in controller actions.
+- Make Model Validation clean by maintaining validations in a separate file and avoid ModelState.IsValid in controller actions.
+- Also we can move model validations from UI layer to Application core, i.e., we can support model validation in other platforms like console apps etc.
 
 
 
