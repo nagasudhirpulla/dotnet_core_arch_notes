@@ -137,4 +137,4 @@ Since the UI layer doesn’t have any direct dependency on types of Infrastructu
 The following are the links to notes on some libraries that help us better implement Clean Architecture
 - [Automapper](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/blob/master/automapper_notes.md)
 - [Mediatr](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/blob/master/mediatr_notes.md)
-- [Fluent Validation with Mediatr](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/blob/master/fluent_validation_notes.md)
+- [Fluent Validation library along with Mediatr library](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/blob/master/fluent_validation_notes.md)
