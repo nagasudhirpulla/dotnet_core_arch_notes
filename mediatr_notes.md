@@ -36,19 +36,93 @@ public void ConfigureServices(IServiceCollection services)
 ```cs
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, int>
 {
+    // inject required dependencies if required
     private readonly INorthwindDbContext _context;
     public CreateProductCommandHandler(INorthwindDbContext context)
     {    _context = context;    }
 
     public async Task<int> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        // ... all the request handling logic
-        
+        // ... request handling logic
         return entity.ProductId;
     }
 }
 ```
+## Notification Pattern Implementation
+- Add Mediatr to services DI container in **ConfigureServices** method of StartUp.cs file
+
+```cs
+public void ConfigureServices(IServiceCollection services)
+{
+    // ...
+    services.AddMediatR(Assembly.GetExecutingAssembly());
+    // ...
+}
+```
+
+- Create an ```INotification``` class which is like a broadcast payload.
+```cs
+public class NewUser : INotification  
+{  
+    public string Username { get; set; }  
+    public string Password { get; set; }  
+}  
+```
+
+- Create ```INotificationHandler<T>``` handlers to handle the broadcasted message. T is the message type that is to be handled.
+```cs
+public class NewUserHandler : INotificationHandler<NewUser>  
+{  
+    public Task Handle(NewUser notification, CancellationToken cancellationToken)  
+    {  
+        //Save to log  
+        Debug.WriteLine(" ****  Save user in database  *****");  
+        return Task.FromResult(true);  
+    }
+} 
+
+public class EmailHandler : INotificationHandler<NewUser>  
+{  
+    public Task Handle(NewUser notification, CancellationToken cancellationToken)  
+    {  
+        //Send email  
+        Debug.WriteLine(" ****  Email sent to user  *****");  
+        return Task.FromResult(true);  
+    }  
+} 
+
+public class LogHandler : INotificationHandler<NewUser>  
+{  
+    public Task Handle(NewUser notification, CancellationToken cancellationToken)  
+    {  
+        //Save to log  
+        Debug.WriteLine(" ****  User save to log  *****");  
+        return Task.FromResult(true);  
+    }  
+}  
+```
+
+- Call the **Publish** method on the injected mediatr in controller methods.
+```cs
+public class AccountsController : Controller  
+{
+    // inject mediatr
+    private readonly IMediator _mediator;  
+    public AccountsController(IMediator mediator)  
+    {  _mediator = mediator;  }  
+
+    // ... controller code
+
+    [HttpPost]  
+    public ActionResult Register(NewUser user)  
+    {
+        // ... controller action code
+        _mediator.Publish(user);  
+        return RedirectToAction("Login");  
+    }  
+}  
+```
 ## Links
 - https://www.c-sharpcorner.com/article/command-mediator-pattern-in-asp-net-core-using-mediatr2/
-- [Handler Code in NorthWindTraders](https://github.com/jasontaylordev/NorthwindTraders/blob/master/Src/Application/Products/Commands/CreateProduct/CreateProductCommandHandler.cs)
+- [Request Handler Code in NorthWindTraders](https://github.com/jasontaylordev/NorthwindTraders/blob/master/Src/Application/Products/Commands/CreateProduct/CreateProductCommandHandler.cs)
 
