@@ -1,7 +1,7 @@
 # Automapper
 
 ## Purpose
-Automapper maps properties of two classes. Typically this can be used to map Entity and DTO.
+Automapper maps properties of two classes. Typically this can be used to map Entity and DTO. Automapper uses reflection under the hood.
 
 ## Inspiration
 - Using Automapper we need not verify whether we have mapped all properties of two classes. 
