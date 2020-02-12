@@ -48,6 +48,22 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
     }
 }
 ```
+
+- call **Send** method inside controller methods
+```cs
+[Authorize]
+public class ProductsController : BaseController
+{
+    // ... controller code
+    
+    [HttpPost]
+    public async Task<ActionResult<int>> Create([FromBody] CreateProductCommand command)
+    {
+        var productId = await Mediator.Send(command);
+        return Ok(productId);
+    }
+}
+```
 ## Notification Pattern Implementation
 - Add Mediatr to services DI container in **ConfigureServices** method of StartUp.cs file
 
@@ -102,22 +118,17 @@ public class LogHandler : INotificationHandler<NewUser>
 }  
 ```
 
-- Call the **Publish** method on the injected mediatr in controller methods.
+- Call the **Publish** method in controller methods.
 ```cs
 public class AccountsController : Controller  
 {
-    // inject mediatr
-    private readonly IMediator _mediator;  
-    public AccountsController(IMediator mediator)  
-    {  _mediator = mediator;  }  
-
     // ... controller code
 
     [HttpPost]  
     public ActionResult Register(NewUser user)  
     {
         // ... controller action code
-        _mediator.Publish(user);  
+        Mediatr.Publish(user);  
         return RedirectToAction("Login");  
     }  
 }  
@@ -125,4 +136,5 @@ public class AccountsController : Controller
 ## Links
 - https://www.c-sharpcorner.com/article/command-mediator-pattern-in-asp-net-core-using-mediatr2/
 - [Request Handler Code in NorthWindTraders](https://github.com/jasontaylordev/NorthwindTraders/blob/master/Src/Application/Products/Commands/CreateProduct/CreateProductCommandHandler.cs)
+- [Mediatr Send example in NorthWindTraders](https://github.com/jasontaylordev/NorthwindTraders/blob/master/Src/WebUI/Controllers/ProductsController.cs)
 
