@@ -1,4 +1,4 @@
-* In this example we will spawn a python child process and get real-time updates through its output stream
+* In this example we will create a python child process and get real-time updates through its output stream
 
 ```cs
 using System;
@@ -67,7 +67,7 @@ namespace inter_process_comm
 }
 ```
 
-* In this example we will spawn a python child process and get bulk data through its output stream till it exits. This scenario is applicable for one time child process spawning and getting bulk data from it.
+* In this example we will create a python child process and get bulk data through its output stream till it exits. This scenario is applicable for one time child process spawning and getting bulk data from it.
 ```cs
 using System;
 using System.Collections.Generic;
