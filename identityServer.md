@@ -11,4 +11,6 @@ As shown below, IdentityServer issues tokens for authenticating users or apps ac
 ![identityServerIllustration](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/raw/master/assets/identityServerIllustration.png)
 
 ### Using IdentityServer in our ASP.NET Core projects
-* IdentityServer is used as a middleware in our services pipeline
+While implementing our Identity Service, we use IdentityServer as a middleware in our services pipeline. Most the specs stuff (like api endpoints, workflow etc) is handled by the IdentityServer middleware and we need to implement some endpoints like user interface etc as shown below
+
+![identityServerIllustration](https://github.com/nagasudhirpulla/dotnet_core_arch_notes/raw/master/assets/identityServerMiddlewareIllustration.png)
