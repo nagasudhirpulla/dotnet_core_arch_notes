@@ -39,4 +39,5 @@ It is the token issuing security service that
 * issue identity and access tokens to clients
 * validate tokens
 
-
+### Grant Types
+https://docs.wso2.com/display/IS530/Authorization+Code+Grant
